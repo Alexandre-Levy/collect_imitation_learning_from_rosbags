@@ -146,7 +146,7 @@ if __name__ == '__main__':
     converter = Converter()
     to_heatmap = ToHeatmap()
     pathlib.Path(f'{sys.argv[1]}/results_projection_quadratic').mkdir(parents=True, exist_ok=True)
-    parameters_file = open(sys.argv[1])
+    parameters_file = open(sys.argv[2])
     parameters = json.load(parameters_file)
     for i in range(len(data)):
         rgb, points = data[i]

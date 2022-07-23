@@ -9,6 +9,7 @@ from torchvision import transforms
 from PIL import Image
 from numpy import nan
 import noise
+import argparse
 import os
 
 from converter import Converter, PIXELS_PER_WORLD
@@ -138,15 +139,16 @@ class ToHeatmap(torch.nn.Module):
         return heatmap
 
 if __name__ == '__main__':
-    import sys
-    import cv2
-    from PIL import ImageDraw
 
-    data = CarlaDataset(sys.argv[1])
+    parser = argparse.ArgumentParser(description='Datasert Visualization')
+    parser.add_argument('--dataset_path', type=str, help='Path to dataset', required=True)
+    parser.add_argument('--param_file', type=str, help='Path to paranetrs file of the camera', required=False, default="parameters_file.json")
+    args = parser.parse_args()
+    data = CarlaDataset(args.dataset_path)
     converter = Converter()
     to_heatmap = ToHeatmap()
-    pathlib.Path(f'{sys.argv[1]}/results_projection_quadratic').mkdir(parents=True, exist_ok=True)
-    parameters_file = open(sys.argv[2])
+    pathlib.Path(f'{args.dataset_path}/results_projection_quadratic').mkdir(parents=True, exist_ok=True)
+    parameters_file = open(args.param_file)
     parameters = json.load(parameters_file)
     for i in range(len(data)):
         rgb, points = data[i]
@@ -171,8 +173,4 @@ if __name__ == '__main__':
         for x, y in points_cam:
             _draw_rgb.ellipse((x-2, y-2, x+2,y+2), (255, 0, 0))
 
-        # _topdown.thumbnail(_rgb.size)
-        # cv2.namedWindow("debug", cv2.WINDOW_NORMAL)
-        # cv2.imshow('debug', cv2.cvtColor(np.hstack((_rgb, _topdown)), cv2.COLOR_BGR2RGB))
-        # cv2.waitKey(0)
-        cv2.imwrite((f'{sys.argv[1]}/results_projection_quadratic/%04d.png' % i), cv2.cvtColor(np.hstack((_rgb, _topdown)), cv2.COLOR_BGR2RGB))
+        cv2.imwrite((f'{args.dataset_path}/results_projection_quadratic/%04d.png' % i), cv2.cvtColor(np.hstack((_rgb, _topdown)), cv2.COLOR_BGR2RGB))

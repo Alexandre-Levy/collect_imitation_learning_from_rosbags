@@ -2,7 +2,9 @@
 
 
 After setting environment with requirements.txt and setting up ros, run this line to extract data from the rosbags and do the interpolation of vehicle location corresponding to each image:
+```
 python bag_to_dataset.py  --bag_file /home/tda/Desktop/ROS/ROS_bag/alex/bombers1.bag/bombers1.bag.db3 --dataset_folder /home/tda/Desktop/ROS/ROS_bag/test_data7 --topic_image /frontcamaraUndistorted/CompressedImage --topic_gps gpsrtk/position
+```
 
 -- bag file is the ros bag that you want to process
 -- dataset_folder is where you want to store it

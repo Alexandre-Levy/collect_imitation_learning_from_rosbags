@@ -64,7 +64,7 @@ def main(args=None):
     parser.add_argument("--result_folder", type=str, help="Result_folder", required=True)
     parser.add_argument("--topic_image", type=str, help="Topic_image", required=True)
     parser.add_argument("--batch_size", type=int, help="Batch_size", required=False, default=10)
-    parser.add_argument("--topic_gps", type=str, help="Topic_gps", required=False, default=None)
+    parser.add_argument("--topic_gps", type=str, help="Topic_gps", required=True)
     args = parser.parse_args()
 
     bag_file = (
